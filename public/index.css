@@ -1,5 +1,21 @@
 :root{
 	--mdc-theme-background: #fafafa;
+	--mdc-theme-primary: #b6ffbf;
+	--mdc-theme-secondary: #ffb6b6;
+	--mdc-theme-surface: #000;
+	--mdc-theme-error: #b00020;
+	--mdc-theme-on-primary: #000;
+	--mdc-theme-on-secondary: #000;
+	--mdc-theme-on-surface: #fff;
+	--mdc-theme-on-error: #fff;
+}
+
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label{
+	color: var(--mdc-theme-on-primary);
+}
+
+.mdc-dialog .mdc-dialog__content, .mdc-dialog .mdc-dialog__title {
+	color: var(--mdc-theme-on-surface);
 }
 
 body {
@@ -12,6 +28,10 @@ body {
 
 [v-cloak] {
   display: none;
+}
+
+.mdc-top-app-bar {
+	color: unset;
 }
 
 .site-card h3, body {
