@@ -1,0 +1,166 @@
+:root{
+	--mdc-theme-background: #fafafa;
+}
+
+body {
+	background-color: var(--mdc-theme-background);
+}
+
+.site-card h3 {
+	margin: 00;
+}
+
+/* @keyframes slideinandout {
+	0% {
+		width: 0%;
+	}
+	50% {
+		width: 100%;
+		left: 0%;
+	}
+	99.99% {
+		left: 100%;
+		opacity: 1;
+	}
+	100% {
+		left: 100%;
+		opacity: 0;
+	}
+} */
+
+@keyframes slideinandout {
+	0% {
+		opacity: 0;
+	}
+	0.01% {
+		opacity: 1;
+	}
+	99.99% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes pulse{
+	0%{
+		opacity: 0;
+	}
+	50%{
+		opacity: 1;
+	}
+	100%{
+		opacity: 0;
+	}
+}
+
+#wrapper {
+	column-count: 7;
+	column-gap: 16px;
+	row-gap: 16px;
+	padding: 0;
+	position: relative;
+	display: grid;
+/* these vars are set by js	 */
+	grid-template-columns: repeat(var(--number-of-columns), minmax(0px, var(--column-width)));
+    position: relative;
+    overflow-x: hidden;
+}
+
+ul.animate::before, ul.animate::after{
+	animation: slideinandout 4s linear;
+	content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+	opacity: 0;
+	background: white;
+}
+ul.animate::after {
+    animation: slideinandout 2s linear, pulse 1s ease 4;
+	background: repeating-linear-gradient(0deg, var(--mdc-theme-background), var(--mdc-theme-background) 60px, #f2f2f2 70px, #f2f2f2 120px, var(--mdc-theme-background) 130px) top left !important;
+/*     background: repeating-linear-gradient(-45deg, #000000, #000000 30px, #ababab 30px, #ababab 60px, #ababab 60px) top left; */
+}
+
+
+.site-card {
+	break-inside: avoid-column;
+	background-color: #ffb6b6;
+	
+/*  to stop the buttons from having weird spacing on the bottom	 */
+	display: flex;
+	flex-direction: column;
+}
+
+.site-title{
+	word-wrap: break-word;
+}
+
+.site-main-action{
+	flex-grow: 1;
+/* 	min-height: 144px; */
+}
+
+.site-card.exists {
+	background-color: #b6ffbf;
+}
+
+.site-card:first-child {
+	break-inside: avoid-column;
+}
+
+.site-card .mdc-card__primary-action {
+	padding: 16px;
+}
+
+.site-card.site-title {
+	word-break: break-all;
+}
+
+.site-card span {
+	font-size: 10px;
+}
+
+.favicon {
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	min-height: 20px;
+	vertical-align: middle;
+	padding-right: 10px;
+}
+
+.mdc-chip__primary-action {
+	outline: none;
+}
+
+#list-filter {
+	display: inline-block;
+}
+
+.search-header {
+	display: flex;
+	align-items: center;
+	user-select: none;
+	flex-wrap: wrap;
+}
+.search-header > div {
+    margin: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#search-bar{
+	margin-bottom: 16px;
+}
+
+.material-icons.mdc-chip__icon.mdc-chip__icon--leading:last-child {
+    margin-right: -4px;
+}
