@@ -148,9 +148,8 @@ ul.animate::after {
 	padding-right: 10px;
 }
 
-.bottom-icon{
-	vertical-align: bottom;
-	margin-top: -4px;
+.middle-icon{
+	vertical-align: middle;
 }
 
 .mdc-chip__primary-action {
