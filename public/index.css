@@ -6,8 +6,12 @@ body {
 	background-color: var(--mdc-theme-background);
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .site-card h3 {
-	margin: 00;
+	margin: 0;
 }
 
 /* @keyframes slideinandout {
@@ -92,7 +96,7 @@ ul.animate::after {
 .site-card {
 	break-inside: avoid-column;
 	background-color: #ffb6b6;
-	
+
 /*  to stop the buttons from having weird spacing on the bottom	 */
 	display: flex;
 	flex-direction: column;

@@ -1,231 +1,249 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.14.3/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.14.3/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.14.3/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.14.3/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.14.3/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/7.14.3/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/7.14.3/firebase-auth.js"></script>
+  <script defer src="/__/firebase/7.14.3/firebase-database.js"></script>
+  <script defer src="/__/firebase/7.14.3/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/7.14.3/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script defer src="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.js"></script>
-    <script defer src="/index.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script defer src="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.js"></script>
+  <script defer src="/index.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css" href="/index.css">
-  </head>
-  <body>
-<main>
-	<div id="search-bar">
-		<div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon" id="search-field">
-			<i class="material-icons mdc-text-field__icon">search</i>
-			<input spellcheck="false" @focus="selectElem" @keydown.enter="searchKeyDown" @keyup.enter="searchKeyUp" class="mdc-text-field__input" id="lookup-input" v-model="username">
-			<div class="mdc-notched-outline">
-				<div class="mdc-notched-outline__leading"></div>
-				<div class="mdc-notched-outline__notch">
-					<label for="text-field-hero-input" class="mdc-floating-label">Lookup</label>
-				</div>
-				<div class="mdc-notched-outline__trailing"></div>
-			</div>
-		</div>
-		<button id="search-button" class="mdc-button mdc-button--raised" @click="submit"><span class="mdc-button__ripple"></span>Go</button>
-	</div>
+  <link rel="stylesheet" type="text/css"
+        href="https://unpkg.com/material-components-web@v6.0.0/dist/material-components-web.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+<body>
+<main v-cloak>
+  <div id="search-bar">
+    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon" id="search-field">
+      <i class="material-icons mdc-text-field__icon">search</i>
+      <input spellcheck="false" @focus="selectElem" @keydown.enter="searchKeyDown" @keyup.enter="searchKeyUp"
+             class="mdc-text-field__input" id="lookup-input" v-model="username">
+      <div class="mdc-notched-outline">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch">
+          <label for="text-field-hero-input" class="mdc-floating-label">Lookup</label>
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
+      </div>
+    </div>
+    <button id="search-button" class="mdc-button mdc-button--raised" @click="submit"><span
+      class="mdc-button__ripple"></span>Go
+    </button>
+  </div>
 
-	<div v-if="results">
-		<search-header @search="searchHandler" @filter="filterHandler" @sort="sortHandler" @saved-sites-only="savedSitesOnlyHandler" @show-images="showImagesHandler" @add-column="columns = Math.min(columns + 1, 20)" @remove-column="columns = Math.max(columns - 1, 1)" :num="results.length" :num-only-found="numOnlyFound" :num-only-not-found="numOnlyNotFound"></search-header>
-	</div>
-	<div v-if="loading" class="mdc-typography--overline">
-		<progress-bar :progress="finishedRequests / totalRequests"></progress-bar>
-		<div v-if="finishedRequests < totalRequests">
-			{{finishedRequests}} / {{totalRequests}} requests complete
-		</div>
-		<div v-else-if="totalRequests > 0">
-			Finishing up...
-		</div>
-		<div v-else>
-			Loading...
-		</div>
-	</div>
-	<div v-if="results">
-		<ul id="wrapper" :style="{'--number-of-columns': columns, '--column-width': (1 / columns) + 'fr'}">
-			<site-card v-for="result in results" v-if="result.exists" :show-images="showImages" :key="result.name" v-bind="result" @save="save">
-			</site-card>
-		</ul>
-		<div v-if="noResults" class="mdc-typography--body1">
-			<div v-if="search">
-				Try removing your search query to see more results.
-			</div>
-			<div v-else>
-				No results found.
-			</div>
-		</div>
-	</div>
+  <div v-if="results">
+    <search-header @search="searchHandler" @filter="filterHandler" @sort="sortHandler"
+                   @saved-sites-only="savedSitesOnlyHandler" @show-images="showImagesHandler"
+                   @add-column="columns = Math.min(columns + 1, 20)" @remove-column="columns = Math.max(columns - 1, 1)"
+                   :num="results.length" :num-only-found="numOnlyFound"
+                   :num-only-not-found="numOnlyNotFound"></search-header>
+  </div>
+  <div v-if="loading" class="mdc-typography--overline">
+    <progress-bar :progress="finishedRequests / totalRequests"></progress-bar>
+    <div v-if="finishedRequests < totalRequests">
+      {{finishedRequests}} / {{totalRequests}} requests complete
+    </div>
+    <div v-else-if="totalRequests > 0">
+      Finishing up...
+    </div>
+    <div v-else>
+      Loading...
+    </div>
+  </div>
+  <div v-if="results">
+    <ul id="wrapper" :style="{'--number-of-columns': columns, '--column-width': (1 / columns) + 'fr'}">
+      <site-card v-for="result in results" v-if="result.exists" :show-images="showImages" :key="result.name"
+                 v-bind="result" @save="save">
+      </site-card>
+    </ul>
+    <div v-if="noResults" class="mdc-typography--body1">
+      <div v-if="search">
+        Try removing your search query to see more results.
+      </div>
+      <div v-else>
+        No results found.
+      </div>
+    </div>
+  </div>
 </main>
 
 <script type="text/x-template" id="search-header-template">
-	<div class="search-header">
-		<div>
-			<i class="material-icons">filter_list</i>
-			<div id="list-filter" class="mdc-chip-set mdc-chip-set--choice" role="grid">
-				<div class="mdc-chip mdc-chip--selected" role="row" id="filter-all">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+  <div class="search-header">
+    <div>
+      <i class="material-icons">filter_list</i>
+      <div id="list-filter" class="mdc-chip-set mdc-chip-set--choice" role="grid">
+        <div class="mdc-chip mdc-chip--selected" role="row" id="filter-all">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="0" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Show All ({{num}})</span>
 						</span>
 					</span>
-				</div>
-				<div class="mdc-chip" role="row" id="filter-only-found">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+        </div>
+        <div class="mdc-chip" role="row" id="filter-only-found">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="-1" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Only Found ({{numOnlyFound}})</span>
 						</span>
 					</span>
-				</div>
-				<div class="mdc-chip" role="row" id="filter-only-not-found">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+        </div>
+        <div class="mdc-chip" role="row" id="filter-only-not-found">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="-1" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Only Not Found ({{numOnlyNotFound}})</span>
 						</span>
 					</span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<i class="material-icons">sort_by_alpha</i>
-			<div id="list-sort" class="mdc-chip-set mdc-chip-set--choice" role="grid">
-				<div class="mdc-chip mdc-chip--selected" role="row" id="sort-popular-sites">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+        </div>
+      </div>
+    </div>
+    <div>
+      <i class="material-icons">sort_by_alpha</i>
+      <div id="list-sort" class="mdc-chip-set mdc-chip-set--choice" role="grid">
+        <div class="mdc-chip mdc-chip--selected" role="row" id="sort-popular-sites">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="0" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Most Popular Sites First</span>
 						</span>
 					</span>
-				</div>
-				<div class="mdc-chip" role="row" id="sort-alphabetical">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+        </div>
+        <div class="mdc-chip" role="row" id="sort-alphabetical">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="-1" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Alphabetical</span>
 						</span>
 					</span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<div id="list-search" class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
-				<i class="material-icons mdc-text-field__icon">search</i>
-				<input class="mdc-text-field__input" id="text-field-hero-input" v-model.trim="search">
-				<div class="mdc-notched-outline">
-					<div class="mdc-notched-outline__leading"></div>
-					<div class="mdc-notched-outline__notch">
-						<label for="text-field-hero-input" class="mdc-floating-label">Filter sites</label>
-					</div>
-					<div class="mdc-notched-outline__trailing"></div>
-				</div>
-			</div>
-		</div><div>
-			<div id="list-image-toggle" class="mdc-chip-set mdc-chip-set--choice" role="grid">
-				<div class="mdc-chip" role="row" id="show-images">
-					<div class="mdc-chip__ripple"></div>
-					<i class="material-icons mdc-chip__icon mdc-chip__icon--leading">insert_photo</i>
-					<span role="gridcell">
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="list-search" class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+        <i class="material-icons mdc-text-field__icon">search</i>
+        <input class="mdc-text-field__input" id="text-field-hero-input" v-model.trim="search">
+        <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label for="text-field-hero-input" class="mdc-floating-label">Filter sites</label>
+          </div>
+          <div class="mdc-notched-outline__trailing"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="list-image-toggle" class="mdc-chip-set mdc-chip-set--choice" role="grid">
+        <div class="mdc-chip" role="row" id="show-images">
+          <div class="mdc-chip__ripple"></div>
+          <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">insert_photo</i>
+          <span role="gridcell">
 						<span role="button" tabindex="0" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Show site icons</span>
 						</span>
 					</span>
-				</div>
-				<div class="mdc-chip mdc-chip--selected" role="row" id="hide-images">
-					<div class="mdc-chip__ripple"></div>
-					<span role="gridcell">
+        </div>
+        <div class="mdc-chip mdc-chip--selected" role="row" id="hide-images">
+          <div class="mdc-chip__ripple"></div>
+          <span role="gridcell">
 						<span role="button" tabindex="-1" class="mdc-chip__primary-action">
 							<span class="mdc-chip__text">Hide site icons</span>
 						</span>
 					</span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<i class="material-icons">star_border</i>
-			<div class="mdc-chip-set mdc-chip-set--choice mdc-chip-set--filter" role="grid" id="starred-sites-only">
-			  <div class="mdc-chip" role="row">
-				<div class="mdc-chip__ripple"></div>
-				<span class="mdc-chip__checkmark" >
+        </div>
+      </div>
+    </div>
+    <div>
+      <i class="material-icons">star_border</i>
+      <div class="mdc-chip-set mdc-chip-set--choice mdc-chip-set--filter" role="grid" id="starred-sites-only">
+        <div class="mdc-chip" role="row">
+          <div class="mdc-chip__ripple"></div>
+          <span class="mdc-chip__checkmark">
 				  <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
 					<path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-						  d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
 				  </svg>
 				</span>
-				<span role="gridcell">
+          <span role="gridcell">
 				  <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
 					<span class="mdc-chip__text">Starred sites only</span>
 				  </span>
 				</span>
-			  </div>
-			</div>
-		</div>
-		<div>
-			<i class="material-icons">view_column</i>
-			<div class="mdc-chip-set" role="grid">
-				<div class="mdc-chip" role="row" @click="$emit('add-column')">
-				  <div class="mdc-chip__ripple"></div>
-				  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">add_circle</i>
-				</div>
-				<div class="mdc-chip" role="row" @click="$emit('remove-column')">
-				  <div class="mdc-chip__ripple"></div>
-				  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">remove_circle</i>
-				</div>
-			</div>
-		</div>
-	</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <i class="material-icons">view_column</i>
+      <div class="mdc-chip-set" role="grid">
+        <div class="mdc-chip" role="row" @click="$emit('add-column')">
+          <div class="mdc-chip__ripple"></div>
+          <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">add_circle</i>
+        </div>
+        <div class="mdc-chip" role="row" @click="$emit('remove-column')">
+          <div class="mdc-chip__ripple"></div>
+          <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">remove_circle</i>
+        </div>
+      </div>
+    </div>
+  </div>
 </script>
 
 <script type="text/x-template" id="site-card-template">
-	<div v-if="show" class="mdc-card site-card" :class="{exists: exists === 'Claimed'}">
-	<div class="mdc-card__primary-action site-main-action" v-on:click="openUserPage">
-		<h3 class="site-title mdc-typography mdc-typography--headline6"><img v-if="showImages && renderImage" v-show="showImage" v-on:load="showImage = true" v-on:error="renderImage = false" class="favicon" :src="favicon">{{name}}</h3>
-		<i v-if="unreliable">Detection of this site is unreliable</i>
-		<p class="mdc-typography mdc-typography--body2">{{exists}} • loaded in {{response_time_s ? response_time_s.toFixed(3) : 0}}s • HTTP {{http_status}}</p>
-	</div>
-	
-	
-	<div class="mdc-card__actions">
-	  <button class="site-save mdc-icon-button toggle mdc-card__action mdc-card__action--icon"
-		 aria-pressed="false"
-		 aria-label="Save"
-		 title="Star site">
-	   <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
-	   <i class="material-icons mdc-icon-button__icon">star_border</i>
-	  </button>
-	  <button class="site-card-page material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" title="Visit Page" v-on:click="openPage">web</button>
-	</div>
-</div>
+  <div v-if="show" class="mdc-card site-card" :class="{exists: exists === 'Claimed'}">
+    <div class="mdc-card__primary-action site-main-action" v-on:click="openUserPage">
+      <h3 class="site-title mdc-typography mdc-typography--headline6"><img v-if="showImages && renderImage"
+                                                                           v-show="showImage"
+                                                                           v-on:load="showImage = true"
+                                                                           v-on:error="renderImage = false"
+                                                                           class="favicon" :src="favicon">{{name}}</h3>
+      <i v-if="unreliable">Detection of this site is unreliable</i>
+      <p class="mdc-typography mdc-typography--body2">{{exists}} • loaded in {{response_time_s ?
+        response_time_s.toFixed(3) : 0}}s • HTTP {{http_status}}</p>
+    </div>
+
+
+    <div class="mdc-card__actions">
+      <button class="site-save mdc-icon-button toggle mdc-card__action mdc-card__action--icon"
+              aria-pressed="false"
+              aria-label="Save"
+              title="Star site">
+        <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">star</i>
+        <i class="material-icons mdc-icon-button__icon">star_border</i>
+      </button>
+      <button class="site-card-page material-icons mdc-icon-button mdc-card__action mdc-card__action--icon"
+              title="Visit Page" v-on:click="openPage">web
+      </button>
+    </div>
+  </div>
 </script>
 
 <script type="text/x-template" id="progress-bar-template">
-	<div role="progressbar" class="mdc-linear-progress" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0">
-  <div class="mdc-linear-progress__buffer">
-    <div class="mdc-linear-progress__buffer-bar"></div>
-    <div class="mdc-linear-progress__buffer-dots"></div>
+  <div role="progressbar" class="mdc-linear-progress" aria-label="Example Progress Bar" aria-valuemin="0"
+       aria-valuemax="1" aria-valuenow="0">
+    <div class="mdc-linear-progress__buffer">
+      <div class="mdc-linear-progress__buffer-bar"></div>
+      <div class="mdc-linear-progress__buffer-dots"></div>
+    </div>
+    <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+      <span class="mdc-linear-progress__bar-inner"></span>
+    </div>
+    <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+      <span class="mdc-linear-progress__bar-inner"></span>
+    </div>
   </div>
-  <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-    <span class="mdc-linear-progress__bar-inner"></span>
-  </div>
-  <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-    <span class="mdc-linear-progress__bar-inner"></span>
-  </div>
-</div>
 </script>
-  </body>
+</body>
 </html>
