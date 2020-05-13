@@ -6,12 +6,20 @@ body {
 	background-color: var(--mdc-theme-background);
 }
 
+#main-content{
+	margin: 8px;
+}
+
 [v-cloak] {
   display: none;
 }
 
-.site-card h3 {
+.site-card h3, body {
 	margin: 0;
+}
+
+header{
+	top: 0;
 }
 
 /* @keyframes slideinandout {

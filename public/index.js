@@ -1,5 +1,3 @@
-document.title = "Username Lookup";
-
 let savedSites = [];
 try {
     savedSites = JSON.stringify(localStorage.getItem("savedSites"));
@@ -62,7 +60,8 @@ const app = new Vue({
         loading: false,
         totalRequests: 0,
         finishedRequests: 0,
-        noResults: false
+        noResults: false,
+        infoDialog: null
     },
     computed: {
         numOnlyFound: function () {
@@ -84,6 +83,10 @@ const app = new Vue({
         }
     },
     methods: {
+        goHome: function(){
+            history.pushState({}, "Username Lookup on Doppelganger.tk", "/");
+            document.title = "Username Lookup on Doppelganger.tk";
+        },
         animate: function () {
             if (this.animateHandler !== null) clearTimeout(this.animateHandler);
             this.$el.querySelector("#wrapper").classList.remove("animate");
@@ -153,7 +156,7 @@ const app = new Vue({
             this.lookupUsername();
         },
         lookupUsername: async function () {
-            document.title = `${this.username} | Username Lookup`;
+            document.title = `${this.username} | Username Lookup on Doppelganger.tk`;
             this.username = this.username.trim();
             this.totalRequests = 0;
             this.finishedRequests = 0;
@@ -350,6 +353,9 @@ const app = new Vue({
                     });
             }
         }
+    },
+    mounted: function(){
+        this.infoDialog = new mdc.dialog.MDCDialog(document.querySelector("#info-dialog"));
     }
 });
 
@@ -361,9 +367,16 @@ const usernameField = new mdc.textField.MDCTextField(
     document.querySelector("#search-field")
 );
 
+new mdc.topAppBar.MDCTopAppBar(document.querySelector("header"));
+
 onpopstate = (event) => {
-    app.username = event.state.username || "";
-    app.lookupUsername();
+    if(event.state && event.state.username) {
+        app.username = event.state.username;
+        app.lookupUsername();
+    }else{
+        app.username = "";
+        app.results = null;
+    }
 };
 
 if (location.search) {
@@ -372,8 +385,7 @@ if (location.search) {
     app.lookupUsername();
     history.replaceState(
         {username: app.username},
-        `${app.username} | Username Lookup`,
+        `${app.username} | Username Lookup on Doppelganger.tk`,
         "?" + app.username
     );
 }
-
