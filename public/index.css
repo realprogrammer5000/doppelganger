@@ -14,7 +14,7 @@
 	color: var(--mdc-theme-on-primary);
 }
 
-.mdc-dialog .mdc-dialog__content, .mdc-dialog .mdc-dialog__title {
+.mdc-dialog .mdc-dialog__content, .mdc-dialog .mdc-dialog__title, .mdc-dialog a {
 	color: var(--mdc-theme-on-surface);
 }
 
