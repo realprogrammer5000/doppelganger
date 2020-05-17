@@ -89,16 +89,17 @@
                      :num="results.length" :num-only-found="numOnlyFound"
                      :num-only-not-found="numOnlyNotFound"></search-header>
     </div>
-    <div v-if="loading" class="mdc-typography--overline">
+    <div v-if="loading">
       <progress-bar :progress="finishedRequests / totalRequests"></progress-bar>
-      <div v-if="finishedRequests < totalRequests">
+      <div v-if="finishedRequests < totalRequests" class="mdc-typography--overline">
         {{finishedRequests}} / {{totalRequests}} requests complete
       </div>
-      <div v-else-if="totalRequests > 0">
+      <div v-else-if="totalRequests > 0" class="mdc-typography--overline">
         Finishing up...
       </div>
       <div v-else>
-        Loading...
+        <div class="mdc-typography--overline">Loading...</div>
+        <div class="mdc-typography--caption">This can take up to 20 seconds</div>
       </div>
     </div>
     <div v-if="results">
