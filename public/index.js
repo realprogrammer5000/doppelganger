@@ -1,3 +1,5 @@
+const basePath = "https://username-lookup-app.herokuapp.com";
+
 let savedSites = [];
 try {
     savedSites = JSON.stringify(localStorage.getItem("savedSites"));
@@ -162,7 +164,7 @@ const app = new Vue({
             this.finishedRequests = 0;
             this.loading = true;
             const {pages} = await (
-                await fetch("https://username-lookup-app.herokuapp.com/pages")
+                await fetch(`${basePath}/pages`)
             ).json();
             const promises = [];
 
@@ -182,7 +184,7 @@ const app = new Vue({
 
                                 data = await (
                                     await fetch(
-                                        `https://username-lookup-app.herokuapp.com/lookup/${this.username}?page=${i}&timeout=10`,
+                                        `${basePath}/lookup/${this.username}?page=${i}&timeout=10`,
                                         {
                                             signal: controller.signal
                                         }
