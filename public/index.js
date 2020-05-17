@@ -224,14 +224,15 @@ const app = new Vue({
                 progress: function (progress) {
                     this.$el.progressElem.progress = progress;
                     this.$el.progressElem.buffer = Math.min(progress * 1.1, 1);
+                    this.$el.progressElem.determinate = !isNaN(progress);
                 }
             },
             mounted: function () {
                 this.$el.progressElem = new mdc.linearProgress.MDCLinearProgress(this.$el);
-                this.$el.progressElem.determinate = true;
                 this.$el.progressElem.open();
                 this.$el.progressElem.progress = this.progress;
                 this.$el.progressElem.buffer = Math.min(this.progress * 1.1, 1);
+                this.$el.progressElem.determinate = !isNaN(this.progress);
             }
         },
         "site-card": {
