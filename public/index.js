@@ -1,4 +1,4 @@
-const basePath = "http://localhost:8080";
+const basePath = "https://username-lookup-app.herokuapp.com";
 
 let suggestedUsernamesChipSet;
 
