@@ -85,7 +85,7 @@
       <alternate-toggle @alternate-toggle="setAlternateDisplay"></alternate-toggle>
       <div v-if="showAlternate" class="mdc-chip-set">
         <alt-username-chip v-if="alternateUsernames && alternateUsernames.length" v-for="alternateUsername in alternateUsernames" v-bind="alternateUsername" @lookup="lookupHandler"></alt-username-chip>
-        <div v-if="!alternateUsernames || !alternateUsernames.length" class="mdc-typography--overline">No alternate usernames found.</div>
+        <div v-if="!alternateUsernames || !alternateUsernames.length" class="mdc-typography--body2">No alternate usernames found.</div>
       </div>
     </div>
     <div v-if="results">
