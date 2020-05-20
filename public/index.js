@@ -178,6 +178,8 @@ const app = new Vue({
         },
         lookupUsername: async function () {
             this.tip = tips[Math.floor(Math.random() * tips.length)];
+            this.filter = "all";
+            this.savedSitesOnly = false;
             document.title = `${this.username} | Username Lookup on Doppelganger.tk`;
             this.username = this.username.trim();
             this.totalRequests = 0;
