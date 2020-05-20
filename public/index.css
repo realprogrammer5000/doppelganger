@@ -233,6 +233,10 @@ ul.animate::after {
 	margin-bottom: 16px;
 }
 
+.mdc-chip__icon{
+	color: var(--mdc-theme-on-surface);
+}
+
 .material-icons.mdc-chip__icon.mdc-chip__icon--leading:last-child {
     margin-right: -4px;
 }
