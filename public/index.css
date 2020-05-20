@@ -189,6 +189,10 @@ ul.animate::after {
 	user-select: none;
 }
 
+#alternate-header h2{
+	flex-grow: 1;
+}
+
 .mdc-chip__primary-action {
 	outline: none;
 }
