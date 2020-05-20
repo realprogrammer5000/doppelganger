@@ -1,5 +1,7 @@
 const basePath = "https://username-lookup-app.herokuapp.com";
 
+let suggestedUsernamesChipSet;
+
 let savedSites = [];
 try {
     savedSites = JSON.stringify(localStorage.getItem("savedSites"));
@@ -63,7 +65,9 @@ const app = new Vue({
         totalRequests: 0,
         finishedRequests: 0,
         noResults: false,
-        infoDialog: null
+        infoDialog: null,
+        alternateUsernames: null,
+        showAlternate: false
     },
     computed: {
         numOnlyFound: function () {
@@ -85,6 +89,9 @@ const app = new Vue({
         }
     },
     methods: {
+        setAlternateDisplay: function(show){
+            this.showAlternate = show;
+        },
         goHome: function(){
             history.pushState({}, "Username Lookup on Doppelganger.tk", "/");
             document.title = "Username Lookup on Doppelganger.tk";
@@ -147,6 +154,10 @@ const app = new Vue({
             e.target.blur();
             this.submit();
         },
+        lookupHandler : function(username){
+            this.username = username;
+            this.submit();
+        },
         submit: function () {
             if (this.loading) return;
             this.username = this.username.trim();
@@ -168,8 +179,15 @@ const app = new Vue({
             ).json();
             const promises = [];
 
+            promises.push((async () => {
+                this.alternateUsernames = await (
+                    await fetch(`${basePath}/alternateusernames/${this.username}`)
+                ).json();
+                // resultNames.forEach(usernameObj => this.alternateUsernames[usernameObj.from] ? this.alternateUsernames[usernameObj.from].push(usernameObj) : this.alternateUsernames[usernameObj.from] = [usernameObj]);
+                this.finishedRequests++;
+            })());
+
             for (let i = 0; i < pages; i++) {
-                this.totalRequests++;
                 promises.push(
                     (async () => {
                         let tries = 0;
@@ -201,9 +219,10 @@ const app = new Vue({
                     })()
                 );
             }
+            this.totalRequests = promises.length;
             const promResults = await Promise.all(promises);
             this.loading = false;
-            this.results = promResults.flat().filter(function (item, pos, arr) {
+            this.results = promResults.filter(Boolean).flat().filter(function (item, pos, arr) {
                 return arr.findIndex((otherItem) => otherItem.name === item.name) === pos;
             });
             this.results.forEach((site) => {
@@ -248,7 +267,8 @@ const app = new Vue({
                 username: String,
                 saved: Boolean,
                 showImages: Boolean,
-                unreliable: Boolean
+                unreliable: Boolean,
+                rank: Number
             },
             computed: {
                 favicon: function () {
@@ -354,6 +374,44 @@ const app = new Vue({
                             this.$emit("show-images", e.detail.chipId === "show-images");
                         }
                     });
+            }
+        },
+        "alt-username-chip": {
+            template: "#alt-username-chip-template",
+            props: {
+                from: String,
+                icon: String,
+                lastUsed: String,
+                username: String
+            },
+            mounted: function(){
+                if(suggestedUsernamesChipSet) suggestedUsernamesChipSet.initialize();
+                else suggestedUsernamesChipSet = new mdc.chips.MDCChipSet(this.$el.parentElement);
+            },
+            computed: {
+                dateString: function(){
+                    return (new Date(this.lastUsed)).toLocaleDateString();
+                }
+            },
+            methods: {
+                emitLookup: function(){
+                    this.$emit("lookup", this.username);
+                    this.$emit("alternate-toggle");
+                }
+            }
+        },
+        "alternate-toggle": {
+            template: "#alternate-toggle-template",
+            mounted: function(){
+                const button = this.$el.querySelector("button");
+                this.$el.button = new mdc.iconButton.MDCIconButtonToggle(button);
+                button.addEventListener("MDCIconButtonToggle:change", ({detail}) => this.$emit("alternate-toggle", detail.isOn));
+            },
+            methods: {
+                alternateToggle: function(){
+                    this.$el.button.on = !this.$el.button.on;
+                    this.$emit("alternate-toggle", this.$el.button.on);
+                }
             }
         }
     },

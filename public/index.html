@@ -81,7 +81,12 @@
         class="mdc-button__ripple"></span>Go
       </button>
     </div>
-
+    <div id="alternates" v-if="!loading && alternateUsernames">
+      <alternate-toggle @alternate-toggle="setAlternateDisplay"></alternate-toggle>
+      <div v-if="showAlternate" class="mdc-chip-set">
+        <alt-username-chip v-for="alternateUsername in alternateUsernames" v-bind="alternateUsername" @lookup="lookupHandler"></alt-username-chip>
+      </div>
+    </div>
     <div v-if="results">
       <search-header @search="searchHandler" @filter="filterHandler" @sort="sortHandler"
                      @saved-sites-only="savedSitesOnlyHandler" @show-images="showImagesHandler"
@@ -102,7 +107,8 @@
         <div class="mdc-typography--caption">This can take up to 20 seconds</div>
       </div>
     </div>
-    <div v-if="results">
+
+    <div v-if="results && !loading">
       <ul id="wrapper" :style="{'--number-of-columns': columns, '--column-width': (1 / columns) + 'fr'}">
         <site-card v-for="result in results" v-if="result.exists" :show-images="showImages" :key="result.name"
                    v-bind="result" @save="save">
@@ -122,6 +128,31 @@
     </div>
   </div>
 </main>
+
+<script type="text/x-template" id="alternate-toggle-template">
+  <div id="alternate-header">
+    <button id="fold-alternates"
+            class="mdc-icon-button"
+            aria-label="Toggle alternates"
+            aria-pressed="false">
+      <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">unfold_less</i>
+      <i class="material-icons mdc-icon-button__icon">unfold_more</i>
+    </button>
+    <h2 class="mdc-typography--body1 inline-block" @click="alternateToggle">Possible Alternate / Previous Usernames</h2>
+  </div>
+</script>
+
+<script type="text/x-template" id="alt-username-chip-template">
+  <div class="mdc-chip" role="row" @click="emitLookup">
+    <div class="mdc-chip__ripple"></div>
+    <img referrerpolicy="no-referrer" class="mdc-chip__icon mdc-chip__icon--leading" :src="icon"/>
+    <span role="gridcell">
+      <span role="button" tabindex="0" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text"><span class="mdc-typography--subtitle2">{{username}}</span> <span class="mdc-typography--caption">{{dateString}}</span></span>
+      </span>
+    </span>
+  </div>
+</script>
 
 <script type="text/x-template" id="search-header-template">
   <div class="search-header">
@@ -247,7 +278,7 @@
 <script type="text/x-template" id="site-card-template">
   <div v-if="show" class="mdc-card site-card" :class="{exists: exists === 'Claimed'}">
     <div class="mdc-card__primary-action site-main-action" v-on:click="openUserPage">
-      <h3 class="site-title mdc-typography mdc-typography--headline6"><img v-if="showImages && renderImage"
+      <h3 class="site-title mdc-typography mdc-typography--headline6"><img referrerpolicy="no-referrer" v-if="showImages && renderImage"
                                                                            v-show="showImage"
                                                                            v-on:load="showImage = true"
                                                                            v-on:error="renderImage = false"

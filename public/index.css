@@ -22,6 +22,11 @@ body {
 	background-color: var(--mdc-theme-background);
 }
 
+.inline-block{
+	display: inline-block;
+	margin: 0;
+}
+
 #main-content{
 	margin: 8px;
 }
@@ -170,6 +175,18 @@ ul.animate::after {
 
 .middle-icon{
 	vertical-align: middle;
+}
+
+#alternates{
+	background-color: var(--mdc-theme-primary);
+	border-radius: 7px;
+}
+
+#alternate-header{
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
 }
 
 .mdc-chip__primary-action {
