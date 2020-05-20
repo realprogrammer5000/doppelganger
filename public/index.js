@@ -1,4 +1,4 @@
-const basePath = "https://username-lookup-app.herokuapp.com";
+const basePath = "http://localhost:8080";
 
 let suggestedUsernamesChipSet;
 
@@ -49,6 +49,13 @@ const mountedOrUpdated = function () {
     this.$el.savedToggle.on = savedSites.includes(this.name);
 };
 
+const tips = `
+Star a site by pressing <i class="material-icons">star_border</i> on that site card. You can filter for only starred sites.
+Alternate usernames can often help you find other accounts.
+You can search for Discord accounts that are on public servers. Try filtering for Discord.
+Click a <i class="material-icons">web</i> icon to open that site's homepage.
+`.trim().split("\n");
+
 const app = new Vue({
     el: "main",
     data: {
@@ -89,6 +96,9 @@ const app = new Vue({
         }
     },
     methods: {
+        randomTip: function(){
+            return tips[Math.floor(Math.random() * tips.length)];
+        },
         setAlternateDisplay: function(show){
             this.showAlternate = show;
         },

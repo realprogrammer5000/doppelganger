@@ -38,7 +38,7 @@
      -->Info<!--
    --></h2>
         <div class="mdc-dialog__content" id="info-dialog-content">
-          Doppelganger.tk is a site that lets you check whether a username is taken across a variety of sites. You can filter for found  or not found sites, sort by popularity, filter for a specific site, or only show results for sites you've favorited. Username info is cached with a lifetime of 5 hours, so any changes could take up to 5 hours to update.
+          Doppelganger.tk is a site that lets you check whether a username is taken across a variety of sites. You can filter for found  or not found sites, sort by popularity, filter for a specific site, or only show results for sites you've favorited. It also suggests alternate / past usernames that could be claimed. Username info is cached with a lifetime of 5 hours, so any changes could take up to 5 hours to update.
           <br>
           Doppelganger.tk is open source (<a href="https://github.com/realprogrammer5000/doppelganger">client</a> <a href="https://github.com/realprogrammer5000/username-lookup">server</a>).
         </div>
@@ -81,7 +81,7 @@
         class="mdc-button__ripple"></span>Go
       </button>
     </div>
-    <div id="alternates" v-if="!loading && alternateUsernames">
+    <div id="alternates" class="theme-card mdc-elevation--z1" v-if="!loading && alternateUsernames">
       <alternate-toggle @alternate-toggle="setAlternateDisplay"></alternate-toggle>
       <div v-if="showAlternate" class="mdc-chip-set">
         <alt-username-chip v-if="alternateUsernames && alternateUsernames.length" v-for="alternateUsername in alternateUsernames" v-bind="alternateUsername" @lookup="lookupHandler"></alt-username-chip>
@@ -106,6 +106,10 @@
       <div v-else>
         <div class="mdc-typography--overline">Loading...</div>
         <div class="mdc-typography--caption">This can take up to 20 seconds</div>
+      </div>
+      <div class="mdc-typography--body2 theme-card mdc-elevation--z1" id="tip">
+        <i class="material-icons">emoji_objects</i>
+        <div v-html="randomTip()"></div>
       </div>
     </div>
 

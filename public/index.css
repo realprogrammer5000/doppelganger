@@ -177,7 +177,7 @@ ul.animate::after {
 	vertical-align: middle;
 }
 
-#alternates{
+.theme-card{
 	background-color: var(--mdc-theme-primary);
 	border-radius: 7px;
 }
@@ -202,12 +202,27 @@ ul.animate::after {
 	align-items: center;
 	user-select: none;
 	flex-wrap: wrap;
+	margin: 10px 0;
 }
 .search-header > div {
-    margin: 10px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
+	margin: 0 10px;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+}
+
+#tip{
+	padding: 10px;
+	margin: 10px 0;
+}
+
+#tip, #tip > div{
+	display: flex;
+	align-items: center;
+}
+
+#tip .material-icons{
+	margin: 0 2px;
 }
 
 #search-bar{
