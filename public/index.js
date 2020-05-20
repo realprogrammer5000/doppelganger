@@ -74,7 +74,8 @@ const app = new Vue({
         noResults: false,
         infoDialog: null,
         alternateUsernames: null,
-        showAlternate: false
+        showAlternate: false,
+        tip: ""
     },
     computed: {
         numOnlyFound: function () {
@@ -96,9 +97,6 @@ const app = new Vue({
         }
     },
     methods: {
-        randomTip: function(){
-            return tips[Math.floor(Math.random() * tips.length)];
-        },
         setAlternateDisplay: function(show){
             this.showAlternate = show;
         },
@@ -179,6 +177,7 @@ const app = new Vue({
             this.lookupUsername();
         },
         lookupUsername: async function () {
+            this.tip = tips[Math.floor(Math.random() * tips.length)];
             document.title = `${this.username} | Username Lookup on Doppelganger.tk`;
             this.username = this.username.trim();
             this.totalRequests = 0;
