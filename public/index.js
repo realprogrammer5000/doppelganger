@@ -1,5 +1,9 @@
 const basePath = "http://localhost:8080";
 
+// fetch the base path to give heroku some time to warm up, decreasing user waiting time
+// noinspection JSIgnoredPromiseFromCall
+fetch(`${basePath}`);
+
 let suggestedUsernamesChipSet;
 
 let savedSites = [];
