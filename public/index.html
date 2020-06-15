@@ -82,7 +82,7 @@
       </button>
     </div>
     <div id="alternates" class="theme-card mdc-elevation--z1" v-if="!loading && alternateUsernames">
-      <alternate-toggle @alternate-toggle="setAlternateDisplay"></alternate-toggle>
+      <alternate-toggle :num-alternates="alternateUsernames.length" @alternate-toggle="setAlternateDisplay"></alternate-toggle>
       <div v-if="showAlternate" class="mdc-chip-set">
         <alt-username-chip v-if="alternateUsernames && alternateUsernames.length" v-for="alternateUsername in alternateUsernames" v-bind="alternateUsername" @lookup="lookupHandler"></alt-username-chip>
         <div v-if="!alternateUsernames || !alternateUsernames.length" class="mdc-typography--body2">No alternate usernames found.</div>
@@ -142,7 +142,7 @@
       <i class="material-icons mdc-icon-button__icon mdc-icon-button__icon--on">unfold_less</i>
       <i class="material-icons mdc-icon-button__icon">unfold_more</i>
     </button>
-    <h2 class="mdc-typography--body1 inline-block" @click="alternateToggle">Possible Alternate / Previous Usernames</h2>
+    <h2 class="mdc-typography--body1 inline-block" @click="alternateToggle">{{numAlternates}} Possible Alternate / Previous Username<template v-if="numAlternates !== 1">s</template></h2>
   </div>
 </script>
 

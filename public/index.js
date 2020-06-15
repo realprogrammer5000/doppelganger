@@ -1,4 +1,4 @@
-const basePath = "https://username-lookup-app.herokuapp.com";
+const basePath = "http://localhost:8080";
 
 let suggestedUsernamesChipSet;
 
@@ -413,6 +413,9 @@ const app = new Vue({
         },
         "alternate-toggle": {
             template: "#alternate-toggle-template",
+            props: {
+                numAlternates: Number
+            },
             mounted: function(){
                 const button = this.$el.querySelector("button");
                 this.$el.button = new mdc.iconButton.MDCIconButtonToggle(button);
