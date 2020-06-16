@@ -1,4 +1,4 @@
-const basePath = "http";
+const basePath = "https://username-lookup-app.herokuapp.com";
 
 // fetch the base path to give heroku some time to warm up, decreasing user waiting time
 // noinspection JSIgnoredPromiseFromCall
