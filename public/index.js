@@ -60,6 +60,12 @@ You can search for Discord accounts that are on public servers. Try filtering fo
 Click a <i class="material-icons">web</i> icon to open that site's homepage.
 `.trim().split("\n");
 
+let resizeTimeout = null;
+addEventListener("resize", () => {
+    if(resizeTimeout !== null) clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => app.columns = Math.floor(innerWidth / 200), 200);
+}, {passive: true});
+
 const app = new Vue({
     el: "main",
     data: {
@@ -71,7 +77,7 @@ const app = new Vue({
         showImages: false,
         animateHandler: null,
         savedSitesOnly: false,
-        columns: Math.floor(innerWidth / 250),
+        columns: Math.floor(innerWidth / 200),
         loading: false,
         totalRequests: 0,
         finishedRequests: 0,
