@@ -87,6 +87,9 @@ const app = new Vue({
         },
         numOnlyNotFound: function () {
             return this.results.length - this.numOnlyFound;
+        },
+        isNative: function(){
+            return typeof Capacitor !== "undefined" && Capacitor.isNative;
         }
     },
     watch: {

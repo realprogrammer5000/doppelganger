@@ -46,7 +46,9 @@
   <header class="mdc-top-app-bar">
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button @click="goHome" class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon--unbounded">home</button><span class="mdc-top-app-bar__title">Doppelganger.tk</span>
+        <button @click="goHome" class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon--unbounded">home</button>
+        <span class="mdc-top-app-bar__title" v-if="isNative">Doppelganger</span>
+        <span class="mdc-top-app-bar__title" v-else>Doppelganger.tk</span>
       </section>
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
         <button @click="infoDialog.open()" class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" aria-label="Info">info</button>
