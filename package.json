@@ -1,0 +1,25 @@
+{
+  "name": "doppelganger",
+  "version": "1.0.0",
+  "description": "[Doppelganger.tk](https://doppelganger.tk) is a site that lets you check whether a username is taken across a variety of sites. You can filter for found or not found sites, sort by popularity, filter for a specific site, or only show results for sites you've favorited. It also suggests alternate / past usernames that could be claimed. Username info is cached with a lifetime of 5 hours, so any changes could take up to 5 hours to update. Doppelganger.tk is open source ([client](https://github.com/realprogrammer5000/doppelganger) [server](https://github.com/realprogrammer5000/username-lookup)).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "android": "npx cap copy android && npx cap open android"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realprogrammer5000/doppelganger.git"
+  },
+  "author": "programmer5000",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/realprogrammer5000/doppelganger/issues"
+  },
+  "homepage": "https://github.com/realprogrammer5000/doppelganger#readme",
+  "dependencies": {
+    "@capacitor/android": "^2.2.0",
+    "@capacitor/cli": "^2.2.0",
+    "@capacitor/core": "^2.2.0"
+  }
+}

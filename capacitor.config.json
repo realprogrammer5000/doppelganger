@@ -1,0 +1,14 @@
+{
+  "appId": "tk.doppelganger",
+  "appName": "doppelganger",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "public",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/max/bin/android-studio"
+}
