@@ -1,0 +1,7 @@
+{
+  "name": "doppelganger",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "custom"
+}
