@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">doppelganger</string>
+    <string name="title_activity_main">doppelganger</string>
+    <string name="package_name">tk.doppelganger</string>
+    <string name="custom_url_scheme">tk.doppelganger</string>
+</resources>
