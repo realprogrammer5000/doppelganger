@@ -58,7 +58,7 @@
       <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon" id="search-field">
         <i class="material-icons mdc-text-field__icon">search</i>
         <input spellcheck="false" @focus="selectElem" @keydown.enter="searchKeyDown" @keyup.enter="searchKeyUp"
-               class="mdc-text-field__input" id="lookup-input" v-model="username">
+               class="mdc-text-field__input" id="lookup-input" autocapitalize="none" v-model="username">
         <div class="mdc-notched-outline">
           <div class="mdc-notched-outline__leading"></div>
           <div class="mdc-notched-outline__notch">
