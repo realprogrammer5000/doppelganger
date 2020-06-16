@@ -215,18 +215,19 @@ ul.animate::after {
 	align-items: center;
 }
 
-#tip{
+#tip-container{
 	padding: 10px;
 	margin: 10px 0;
 }
 
-#tip, #tip > div{
-	display: flex;
-	align-items: center;
+#tip-container .material-icons{
+	margin: -10px -2px 0;
+	position: relative;
+	top: 5px;
 }
 
-#tip .material-icons{
-	margin: 0 2px;
+#tip-icon.material-icons{
+	margin-right: 5px;
 }
 
 #search-bar{
