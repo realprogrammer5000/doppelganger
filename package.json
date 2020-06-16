@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "android": "npx cap copy android && npx cap open android"
+    "android": "npx cap copy android && npx cap open android",
+    "copy": "npx cap copy android"
   },
   "repository": {
     "type": "git",

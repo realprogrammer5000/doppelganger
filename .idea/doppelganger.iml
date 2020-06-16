@@ -11,5 +11,6 @@
     <orderEntry type="library" name="vue" level="application" />
     <orderEntry type="library" name="material-components-web" level="application" />
     <orderEntry type="module" module-name="username-lookup" />
+    <orderEntry type="library" name="material-components-web" level="application" />
   </component>
 </module>
