@@ -1,4 +1,4 @@
-const basePath = "https://username-lookup-app.herokuapp.com";
+const basePath = "http://localhost:8080";
 
 // fetch the base path to give heroku some time to warm up, decreasing user waiting time
 // noinspection JSIgnoredPromiseFromCall
@@ -116,6 +116,10 @@ const app = new Vue({
         goHome: function(){
             history.pushState({}, "Username Lookup on Doppelganger.tk", "/");
             document.title = "Username Lookup on Doppelganger.tk";
+
+            app.username = "";
+            app.results = null;
+            app.alternateUsernames = null;
         },
         animate: function () {
             if (this.animateHandler !== null) clearTimeout(this.animateHandler);
@@ -458,6 +462,7 @@ const usernameField = new mdc.textField.MDCTextField(
 new mdc.topAppBar.MDCTopAppBar(document.querySelector("header"));
 
 onpopstate = (event) => {
+    console.log("popstate");
     if(event.state && event.state.username) {
         app.username = event.state.username;
         app.lookupUsername();
