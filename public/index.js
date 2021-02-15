@@ -56,7 +56,6 @@ const mountedOrUpdated = function () {
 const tips = `
 Star a site by pressing <i class="material-icons">star_border</i> on that site card. You can filter for only starred sites.
 Alternate usernames can often help you find other accounts.
-You can search for Discord accounts that are on public servers. Try filtering for Discord.
 Click a <i class="material-icons">web</i> icon to open that site's homepage.
 `.trim().split("\n");
 
